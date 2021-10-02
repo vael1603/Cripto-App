@@ -1,22 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { DashboardService } from '../services/dashboard/dashboard.service';
-import { CriptoInfo } from '../interfaces/CriptoInfo';
-import { Label, SingleDataSet } from 'ng2-charts';
 import { ChartOptions, ChartType } from 'chart.js';
+import { Label, SingleDataSet } from 'ng2-charts';
+import { BuyModalComponent } from '../buy-modal/buy-modal.component';
+import { ExchangeInfo } from '../interfaces/ExchangeInfo';
+import { DashboardService } from '../services/dashboard/dashboard.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-cripto-dashboard',
+  templateUrl: './cripto-dashboard.component.html',
+  styleUrls: ['./cripto-dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class CriptoDashboardComponent implements OnInit {
 
-  public criptoNameList = [];
-  public maxVolumeCriptoList = [];
-  public criptoPriceList = [];
-  public criptoObjectList = [];
+
+  public exchangeNameList = [];
+  public maxVolumeExchangeList = [];
+  public exchangeVolumeList = [];
+  public exchangeObjectList = [];
   public allIconList = [];
-  public criptoIconList = [];
+  public exchangeIconList = [];
 
   polarAreaChartLabels: Label[];
   polarAreaChartData: SingleDataSet;
@@ -64,16 +66,16 @@ export class DashboardComponent implements OnInit {
   }
 
   public getCriptos() {
-    this.dashboardService.getCriptosIcons(5).subscribe( data => {
+    this.dashboardService.getExchangesIcons(5).subscribe( data => {
       this.allIconList = data;
     })
-    this.dashboardService.getCriptoAssets().subscribe( data => {
+    this.dashboardService.getExchanges().subscribe( data => {
       this.fiveCriptosWithMoreVolumen(data)
         .then(res => this.setCharts());
     });
   }
 
-  public async fiveCriptosWithMoreVolumen(list:CriptoInfo[]) {
+  public async fiveCriptosWithMoreVolumen(list:ExchangeInfo[]) {
     let max = 0;
     let volumeList = list.map(a => a.volume_1mth_usd);
 
@@ -84,19 +86,19 @@ export class DashboardComponent implements OnInit {
       let index = volumeList.indexOf(max);
       // guardamos el Icono de la cripto en un array
       let icon = this.allIconList[index];
-      this.criptoIconList.push(icon.url);
+      this.exchangeIconList.push(icon.url);
       // guardamos el objeto completo en un array de objetos´
-      let criptoObject = list[index];
-      this.criptoObjectList.push(criptoObject);
+      let exchangeObject = list[index];
+      this.exchangeObjectList.push(exchangeObject);
       // guardamos el nombre de la cripto en un array de nombres´
-      let nameCripto =  criptoObject.name;
-      this.criptoNameList.push(nameCripto);
+      let nameExchange =  exchangeObject.name;
+      this.exchangeNameList.push(nameExchange);
       // guardamos el precio de la cripto en un array de precios´
-      let priceCripto = criptoObject.price_usd;
-      this.criptoPriceList.push(priceCripto);
+      let volumeExchange = exchangeObject.volume_1mth_usd;
+      this.exchangeVolumeList.push(volumeExchange);
       // guardamos dicho valor en un array de volumenes
       let maxBillion = this.convertNumberToBillions(max);
-      this.maxVolumeCriptoList.push(maxBillion);
+      this.maxVolumeExchangeList.push(maxBillion);
       // eliminamos dicho valor del array original
       volumeList.splice(index,1);
     };
@@ -106,18 +108,34 @@ export class DashboardComponent implements OnInit {
 
   public setCharts(){
     this.polarAreaChartType = 'pie';
-    this.polarAreaChartLabels = this.criptoNameList;
-    this.polarAreaChartData = this.maxVolumeCriptoList;
+    this.polarAreaChartLabels = this.exchangeNameList;
+    this.polarAreaChartData = this.maxVolumeExchangeList;
     this.showPolarChartVolume = true;
   
     this.barChartType = 'bar';
-    this.barChartDataSets = [{data: this.criptoPriceList, label: this.criptoNameList}];
-    this.barChartLabels = this.criptoNameList;
+    this.barChartDataSets = [{data: this.exchangeVolumeList, label: this.exchangeNameList}];
+    this.barChartLabels = this.exchangeNameList;
     this.showBarChartPrice = true;                
   };
 
   public convertNumberToBillions(num){
     let billion = num / 1000000000
     return billion;
+  }
+
+
+  name = 'carlos';
+  animal = 'perro';
+  
+  openDialog(): void {
+    const dialogRef = this.dialog.open(BuyModalComponent, {
+      width: '250px',
+      data: {name: this.name, animal: this.animal}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.animal = result;
+    });
   }
 }

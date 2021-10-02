@@ -2,9 +2,10 @@
     <main class="pt-3">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-2 mb-4" *ngFor="let item of criptoIconList">
+                <div class="col-md-2 mb-4" *ngFor="let item of exchangeIconList">
                     <img [src]="item">
                 </div>
+                <button mat-raised-button (click)="openDialog()">Pick one</button>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-4">
@@ -34,20 +35,18 @@
                             <div class="table-responsive">
                                 <table class="table  mb-0">
                                     <thead class="">
-                                    <tr>
-                                        <th>Cripto</th>
-                                        <th>Volumen Diario</th>
-                                        <th>ID</th>
-                                        <th class="text-center">Precio</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr *ngFor="let item of criptoObjectList">
-                                        <td>{{item.name}}</td>
-                                        <td>{{item.volume_1day_usd}}</td>
-                                        <td>{{item.asset_id}}</td>
-                                        <td class="text-center">$ {{item.price_usd}}</td>
-                                    </tr>
+                                        <tr>
+                                            <th>Exchange</th>
+                                            <th>Volumen Diario</th>
+                                            <th>Website</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let item of exchangeObjectList">
+                                            <td>{{item.exchange_id}}</td>
+                                            <td>{{item.volume_1day_usd}}</td>
+                                            <td>{{item.Website}}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
