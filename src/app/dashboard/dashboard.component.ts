@@ -84,7 +84,7 @@ export class DashboardComponent implements OnInit {
       let index = volumeList.indexOf(max);
       // guardamos el Icono de la cripto en un array
       let icon = this.allIconList[index];
-      this.criptoIconList.push(icon.url);
+      this.criptoIconList.push(icon);
       // guardamos el objeto completo en un array de objetos´
       let criptoObject = list[index];
       this.criptoObjectList.push(criptoObject);

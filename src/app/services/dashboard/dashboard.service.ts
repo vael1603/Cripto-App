@@ -32,20 +32,5 @@ export class DashboardService {
     return this.http.get<any>(`${this.path}/assets/icons/${size}`, {headers});
   }
 
-  getExchanges() {
-    this.path = this.coinApi;
-    const headers = new HttpHeaders()
-    .set('X-CoinAPI-Key', this.coinApikey);
-
-    return this.http.get<any>(`${this.path}/exchanges`, {headers});
-  }
-
-  getExchangesIcons(size) {
-    this.path = this.coinApi;
-    const headers = new HttpHeaders()
-    .set('X-CoinAPI-Key', this.coinApikey);
-
-    return this.http.get<any>(`${this.path}/exchanges/icons/${size}`, {headers});
-  }
 }
 
