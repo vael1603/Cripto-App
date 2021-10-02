@@ -1,0 +1,60 @@
+<body class="fixed-sn">
+    <main class="pt-3">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2 mb-4" *ngFor="let item of criptoIconList">
+                    <img [src]="item.url">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body pl-0 pr-2 pb-0">
+                            <div class="float-left white-text pl-4">
+                                <p class="font-weight-light mb-1 mt-n1 text-white-50 font-small">Total Shipments</p>
+                                <h2 class="font-weight-light">Performance</h2>
+                                <div style="display: block" *ngIf="showPolarChartVolume">
+                                    <canvas baseChart
+                                    [data]="polarAreaChartData"
+                                    [labels]="polarAreaChartLabels"
+                                    [legend]="polarAreaLegend"
+                                    [chartType]="polarAreaChartType">
+                                    </canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card card-table">
+                        <div class="card-header">
+                            <h5 class="my-2">Simple Table</h5>
+                        </div>
+                        <div class="card-body pt-1">
+                            <div class="table-responsive">
+                                <table class="table  mb-0">
+                                    <thead class="">
+                                    <tr>
+                                        <th>Cripto</th>
+                                        <th>Volumen Diario</th>
+                                        <th>ID</th>
+                                        <th class="text-center">Precio</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let item of criptoObjectList">
+                                        <td>{{item.name}}</td>
+                                        <td>{{item.volume_1day_usd}}</td>
+                                        <td>{{item.asset_id}}</td>
+                                        <td class="text-center">$ {{item.price_usd}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
