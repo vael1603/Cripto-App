@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatDialogModule } from '@angular/material/dialog';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -10,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ChartsModule } from 'ng2-charts';
 import { CriptoDashboardComponent } from './cripto-dashboard/cripto-dashboard.component';
 import { BuyModalComponent } from './buy-modal/buy-modal.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { BuyModalComponent } from './buy-modal/buy-modal.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ChartsModule
+    ChartsModule,
+    MatDialogModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

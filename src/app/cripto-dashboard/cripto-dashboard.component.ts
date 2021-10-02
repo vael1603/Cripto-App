@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ChartOptions, ChartType } from 'chart.js';
 import { Label, SingleDataSet } from 'ng2-charts';
 import { BuyModalComponent } from '../buy-modal/buy-modal.component';
@@ -59,6 +60,7 @@ export class CriptoDashboardComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
