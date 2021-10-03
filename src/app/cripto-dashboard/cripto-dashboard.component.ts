@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChartOptions, ChartType } from 'chart.js';
 import { Label, SingleDataSet } from 'ng2-charts';
 import { BuyModalComponent } from '../buy-modal/buy-modal.component';
+import { DataWs } from '../interfaces/DataWs';
 import { ExchangeInfo } from '../interfaces/ExchangeInfo';
 import { DashboardService } from '../services/dashboard/dashboard.service';
 
@@ -60,14 +61,15 @@ export class CriptoDashboardComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public dataWs: DataWs
   ) { }
 
   ngOnInit(): void {
     this.getCriptos();
   }
 
-  public getCriptos() {
+/*  public getCriptos() {
     this.dashboardService.getExchangesIcons(5).subscribe( data => {
       this.allIconList = data;
     })
@@ -76,19 +78,26 @@ export class CriptoDashboardComponent implements OnInit {
         .then(res => this.setCharts());
     });
   }
+*/
 
-  public async fiveCriptosWithMoreVolumen(list:ExchangeInfo[]) {
+  public getCriptos() {
+    this.allIconList = this.dataWs.dataExchangeIcons;
+    this.fiveCriptosWithMoreVolumen(this.dataWs.dataExchanges)
+        .then(res => this.setCharts());
+  }
+
+  public async fiveCriptosWithMoreVolumen(list) {
     let max = 0;
     let volumeList = list.map(a => a.volume_1mth_usd);
 
-    for(var i=0; i<5; i++) {
+    for(var i=0; i<3; i++) {
       // buscamos el vamor mas grande
       max = Math.max.apply(null, volumeList);
       // buscamos el idice del valor en el array
       let index = volumeList.indexOf(max);
       // guardamos el Icono de la cripto en un array
       let icon = this.allIconList[index];
-      this.exchangeIconList.push(icon.url);
+      this.exchangeIconList.push(icon);
       // guardamos el objeto completo en un array de objetos´
       let exchangeObject = list[index];
       this.exchangeObjectList.push(exchangeObject);

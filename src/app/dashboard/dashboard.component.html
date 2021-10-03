@@ -2,13 +2,18 @@
     <main class="pt-3">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-2 mb-4" *ngFor="let item of criptoIconList">
-                    <img [src]="item">
+                <div style="width: 20%;" class=" mb-4 text-center"
+                 *ngFor="let item of criptoIconList">
+                 <a routerLink="/cripto-dashboard"><img [src]="item.url" width="50px"></a>
+                 <h4>{{item.asset_id}}</h4>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-4">
                     <div class="card">
+                        <div class="card-header">
+                            <h5 class="my-2">Simple Table</h5>
+                        </div>
                         <div class="card-body pl-0 pr-2 pb-0">
                             <div class="float-left white-text pl-4">
                                 <p class="font-weight-light mb-1 mt-n1 text-white-50 font-small">Total Shipments</p>

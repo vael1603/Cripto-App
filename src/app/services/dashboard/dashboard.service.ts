@@ -47,5 +47,14 @@ export class DashboardService {
 
     return this.http.get<any>(`${this.path}/exchanges/icons/${size}`, {headers});
   }
+
+  getExchangeRate(assetBase,assetQuote){
+    this.path = this.coinApi;
+    const headers = new HttpHeaders()
+    .set('X-CoinAPI-Key', this.coinApikey);
+    const timeNow = new Date();
+
+    return this.http.get<any>(`${this.path}/exchangerate/${assetBase}/${assetQuote}?time=${timeNow}`, {headers});
+  }
 }
 

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatDialogModule } from '@angular/material/dialog';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
@@ -12,6 +11,15 @@ import { ChartsModule } from 'ng2-charts';
 import { CriptoDashboardComponent } from './cripto-dashboard/cripto-dashboard.component';
 import { BuyModalComponent } from './buy-modal/buy-modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DataWs } from './interfaces/DataWs';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'cripto-dashboard', component: CriptoDashboardComponent },
+  { path: '', redirectTo: 'dashboard', pathMatch: "full" },
+
+];
 
 @NgModule({
   declarations: [
@@ -26,12 +34,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule,
     ChartsModule,
     MatDialogModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    RouterModule.forRoot(routes),
+    RouterModule
   ],
-  providers: [],
+  exports: [RouterModule],
+  providers: [DataWs],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

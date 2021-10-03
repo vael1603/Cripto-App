@@ -2,8 +2,10 @@
     <main class="pt-3">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-2 mb-4" *ngFor="let item of exchangeIconList">
-                    <img [src]="item">
+                <div style="width: 33%;" class=" mb-4 text-center"
+                    *ngFor="let item of exchangeIconList">
+                    <a routerLink="/cripto-dashboard"><img [src]="item.url" width="100px"></a>
+                    <h4>{{item.exchange_id}}</h4>
                 </div>
                 <button mat-raised-button (click)="openDialog()">Pick one</button>
             </div>
@@ -45,7 +47,7 @@
                                         <tr *ngFor="let item of exchangeObjectList">
                                             <td>{{item.exchange_id}}</td>
                                             <td>{{item.volume_1day_usd}}</td>
-                                            <td>{{item.Website}}</td>
+                                            <td>{{item.website}}</td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -3,6 +3,7 @@ import { DashboardService } from '../services/dashboard/dashboard.service';
 import { CriptoInfo } from '../interfaces/CriptoInfo';
 import { Label, SingleDataSet } from 'ng2-charts';
 import { ChartOptions, ChartType } from 'chart.js';
+import { DataWs } from '../interfaces/DataWs';
 
 @Component({
   selector: 'app-dashboard',
@@ -57,23 +58,32 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
+    public dataWs: DataWs
   ) { }
 
   ngOnInit(): void {
     this.getCriptos();
   }
-
+/*
   public getCriptos() {
     this.dashboardService.getCriptosIcons(5).subscribe( data => {
       this.allIconList = data;
-    })
+    });
     this.dashboardService.getCriptoAssets().subscribe( data => {
       this.fiveCriptosWithMoreVolumen(data)
         .then(res => this.setCharts());
     });
   }
+*/
 
-  public async fiveCriptosWithMoreVolumen(list:CriptoInfo[]) {
+  public getCriptos() {
+    this.allIconList = this.dataWs.dataCriptoIcons;
+    console.log(this.allIconList);
+    this.fiveCriptosWithMoreVolumen(this.dataWs.dataAssets)
+        .then(res => this.setCharts());
+  }
+
+  public async fiveCriptosWithMoreVolumen(list) {
     let max = 0;
     let volumeList = list.map(a => a.volume_1mth_usd);
 
@@ -84,7 +94,7 @@ export class DashboardComponent implements OnInit {
       let index = volumeList.indexOf(max);
       // guardamos el Icono de la cripto en un array
       let icon = this.allIconList[index];
-      this.criptoIconList.push(icon.url);
+      this.criptoIconList.push(icon);
       // guardamos el objeto completo en un array de objetos´
       let criptoObject = list[index];
       this.criptoObjectList.push(criptoObject);
@@ -100,8 +110,6 @@ export class DashboardComponent implements OnInit {
       // eliminamos dicho valor del array original
       volumeList.splice(index,1);
     };
-
-    return this.setCharts();
   }
 
   public setCharts(){
