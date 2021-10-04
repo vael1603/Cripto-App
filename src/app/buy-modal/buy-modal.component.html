@@ -1,1 +1,9 @@
-<h1 mat-dialog-title>Comprar</h1>
+<h1 mat-dialog-title>Comprar {{data.criptoName}}</h1>
+
+<p>precio: ${{data.price}}usd</p>
+
+<p>Comision: {{data.commission}}%</p>
+
+<p>Valor de commision: ${{this.commissionValue}}</p>
+
+<p>Total: {{this.total}}</p>

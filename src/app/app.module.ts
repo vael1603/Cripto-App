@@ -13,6 +13,9 @@ import { BuyModalComponent } from './buy-modal/buy-modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataWs } from './interfaces/DataWs';
 import { RouterModule, Routes } from '@angular/router';
+import { ChartConfig } from './interfaces/ChartConfig';
+import { FormsModule } from '@angular/forms';
+import { BasicMaths } from './functions/BasicMaths';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -38,10 +41,11 @@ const routes: Routes = [
     MatDialogModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
-    RouterModule
+    RouterModule,
+    FormsModule 
   ],
   exports: [RouterModule],
-  providers: [DataWs],
+  providers: [DataWs, ChartConfig, BasicMaths],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

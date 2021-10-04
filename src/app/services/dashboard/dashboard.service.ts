@@ -24,6 +24,14 @@ export class DashboardService {
     return this.http.get<any>(`${this.path}/assets`, {headers});
   }
 
+  getCriptoInfo(criptoId) {
+    this.path = this.coinApi;
+    const headers = new HttpHeaders()
+    .set('X-CoinAPI-Key', this.coinApikey);
+
+    return this.http.get<any>(`${this.path}/assets/${criptoId}`, {headers});
+  }
+
   getCriptosIcons(size) {
     this.path = this.coinApi;
     const headers = new HttpHeaders()
@@ -52,8 +60,7 @@ export class DashboardService {
     this.path = this.coinApi;
     const headers = new HttpHeaders()
     .set('X-CoinAPI-Key', this.coinApikey);
-    const timeNow = new Date();
-
+    const timeNow = new Date().toISOString().slice(0, 10);
     return this.http.get<any>(`${this.path}/exchangerate/${assetBase}/${assetQuote}?time=${timeNow}`, {headers});
   }
 }

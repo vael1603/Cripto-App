@@ -615,4 +615,6 @@ export class DataWs {
             url: "https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_512/8c05799ea06d4aabbb79fb660bcc3148.png"
         }
     ]
+
+    public notFoundIMG = '../../assets/images/not-found.png';
 }

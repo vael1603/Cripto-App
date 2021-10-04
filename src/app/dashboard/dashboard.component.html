@@ -3,9 +3,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div style="width: 20%;" class=" mb-4 text-center"
-                 *ngFor="let item of criptoIconList">
-                 <a routerLink="/cripto-dashboard"><img [src]="item.url" width="50px"></a>
-                 <h4>{{item.asset_id}}</h4>
+                    *ngFor="let item of criptoIconList">
+                    <a routerLink="/cripto-dashboard" [queryParams]="{ criptoName: item.asset_id, iconUrl: item.url}">
+                        <img [src]="item.url" width="50px">
+                    </a>
+                    <h4>{{item.asset_id}}</h4>
                 </div>
             </div>
             <div class="row">
@@ -16,8 +18,6 @@
                         </div>
                         <div class="card-body pl-0 pr-2 pb-0">
                             <div class="float-left white-text pl-4">
-                                <p class="font-weight-light mb-1 mt-n1 text-white-50 font-small">Total Shipments</p>
-                                <h2 class="font-weight-light">Performance</h2>
                                 <div style="display: block" *ngIf="showPolarChartVolume">
                                     <canvas baseChart
                                     [data]="polarAreaChartData"
@@ -27,6 +27,7 @@
                                     </canvas>
                                 </div>
                             </div>
+                            <p class="description-chart mt-4 mb-0 text-center">(LOS NUMEROS ESTAN EXPRESADOS EN MILES DE MILLONES)</p>
                         </div>
                     </div>
                 </div>
@@ -42,7 +43,6 @@
                                     <tr>
                                         <th>Cripto</th>
                                         <th>Volumen Diario</th>
-                                        <th>ID</th>
                                         <th class="text-center">Precio</th>
                                     </tr>
                                     </thead>
@@ -50,8 +50,7 @@
                                     <tr *ngFor="let item of criptoObjectList">
                                         <td>{{item.name}}</td>
                                         <td>{{item.volume_1day_usd}}</td>
-                                        <td>{{item.asset_id}}</td>
-                                        <td class="text-center">$ {{item.price_usd}}</td>
+                                        <td class="text-center" type="number" maxlength="10">$ {{item.price_usd}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
