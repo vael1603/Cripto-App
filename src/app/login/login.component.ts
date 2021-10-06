@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { LoginService } from '../services/login/login.service';
+import { LoginResponse, UserPassword } from '../interfaces/UserPassword';
+import { Router } from '@angular/router';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +11,45 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  form: any = {};
+  username: any;
+  password: any;
+  incorrectPassword = false;
+  notFoundUser = false;
+  loginInfo: LoginResponse;
+  constructor(private loginService: LoginService,
+    private router: Router) {
+    
+  }
 
   ngOnInit(): void {
+  }
+  
+  public login() {
+    this.resetErrors();
+    this.loginService.login(this.form).subscribe( data =>{
+      this.refreshInfo(data)
+      if (data.logged == true){
+        sessionStorage.setItem('Logged', 'true');
+        this.router.navigate(['/dashboard']);
+      } else {
+        if (data.foundUser == true) {
+          this.incorrectPassword = true;
+        } else {
+          this.notFoundUser = true;
+        }
+      }
+    });
+  }
+
+  refreshInfo(info: LoginResponse) {
+    this.loginService.sendInfo(info);
+  }
+
+
+  resetErrors() {
+    this.notFoundUser = false;
+    this.incorrectPassword = false;
   }
 
 }

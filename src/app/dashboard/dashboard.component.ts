@@ -6,6 +6,9 @@ import { ChartOptions, ChartType } from 'chart.js';
 import { DataWs } from '../interfaces/DataWs';
 import { ChartConfig } from '../interfaces/ChartConfig';
 import { BasicMaths } from '../functions/BasicMaths';
+import { Router, Routes } from '@angular/router';
+import { LoginService } from '../services/login/login.service';
+import { LoadingComponent } from '../loading/loading/loading.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,13 +31,18 @@ export class DashboardComponent implements OnInit {
   showPolarChartVolume = false;
 
   constructor(
+    private loginService: LoginService,
     private dashboardService: DashboardService,
     public dataWs: DataWs,
     public chartConfig: ChartConfig,
     public basicMaths: BasicMaths,
-  ) { }
+    private router: Router,
+    private loading: LoadingComponent,
+  ) {
+  }
 
   ngOnInit(): void {
+    this.loading.showSpiner();
     this.getCriptos();
   }
 
@@ -100,7 +108,8 @@ export class DashboardComponent implements OnInit {
     this.polarAreaChartType = 'pie';
     this.polarAreaChartLabels = this.criptoNameList;
     this.polarAreaChartData = this.maxVolumeCriptoList;
-    this.showPolarChartVolume = true;           
+    this.showPolarChartVolume = true;
+    this.loading.stopSpiner();
   };
 
 }

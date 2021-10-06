@@ -1,4 +1,5 @@
 export const environment = {
+  backendApi: 'ws-cripto/api',
   coinApi: 'https://rest.coinapi.io/v1',
   //coinApiKey: 'CEA0B191-09B0-463E-B3CB-20B0749E4C43',
   //coinApiKey: 'B3C29CD9-720F-4F4A-A48A-6B2590FAF241',

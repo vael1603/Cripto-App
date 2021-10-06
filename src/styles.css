@@ -8,6 +8,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .unityInput {
-    width: 110px !important;
+    width: 120px !important;
     text-align: center;
+}
+
+.mat-select-value {
+    color: black !important;
+}
+
+tbody.buyTable td{
+    width: 25%;
 }

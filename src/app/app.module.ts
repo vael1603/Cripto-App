@@ -15,11 +15,15 @@ import { DataWs } from './interfaces/DataWs';
 import { RouterModule, Routes } from '@angular/router';
 import { ChartConfig } from './interfaces/ChartConfig';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { BasicMaths } from './functions/BasicMaths';
+import { MatSelectModule } from '@angular/material/select';
+import { LoadingComponent } from './loading/loading/loading.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   { path: 'cripto-dashboard', component: CriptoDashboardComponent },
+  { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'dashboard', pathMatch: "full" },
 
 ];
@@ -32,7 +36,8 @@ const routes: Routes = [
     FooterComponent,
     DashboardComponent,
     CriptoDashboardComponent,
-    BuyModalComponent
+    BuyModalComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -42,10 +47,12 @@ const routes: Routes = [
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
     RouterModule,
-    FormsModule 
+    FormsModule,
+    MatSelectModule,
+    MatButtonModule
   ],
   exports: [RouterModule],
-  providers: [DataWs, ChartConfig, BasicMaths],
+  providers: [DataWs, ChartConfig, BasicMaths, HeaderComponent, LoginComponent, LoadingComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

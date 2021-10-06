@@ -1,1 +1,35 @@
-<p>login works!</p>
+<body>
+    <div class="container">
+        <div class="row justify-content-center" style="margin: 0px;">
+            <div class="form-block center-block light-gray-bg2 border-clear">
+                <div class="card">
+                    <form (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+                        <h3 class="text-center">Bienvenido ingrese su usuario y contraseña</h3>
+                        <div class="col-lg-11 mx-auto pt-2">
+                        
+                            <div class="form-group">
+                                <input type="text" class="form-control" [ngClass]="{ 'has-error': f.submitted && !username.valid }" 
+                                [(ngModel)]="form.user" id="username" name="username" #username="ngModel" required placeholder="usuario">
+                                <div *ngIf="f.submitted && !username.valid" class="help-block text-danger">Campo requerido</div>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="password" class="form-control" [(ngModel)]="form.password" [ngClass]="{ 'has-error': f.submitted && !username.valid }"
+                                id="password" name="password" #password="ngModel" required placeholder="Contraseña">
+                                <div *ngIf="f.submitted && !password.valid" class="help-block text-danger">Campo requerido</div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-lg-12 text-center">
+                                    <button type="submit" mat-flat-button color="primary" >Ingresar</button>
+                                </div>
+                                <div *ngIf="incorrectPassword" class="help-block text-danger">Contraseña Incorrecta</div>
+                                <div *ngIf="notFoundUser" class="help-block text-danger">Usuario no encontrado</div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>  
+</body>

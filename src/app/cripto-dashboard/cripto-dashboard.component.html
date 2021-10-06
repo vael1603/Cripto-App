@@ -4,21 +4,13 @@
             <div class="row">
                 <div class="col-md-4 mb-4">
                     <div class="card">
-                        <div class="card-header">
-                            <h5 class="my-2">{{criptoName}}</h5>
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="my-2">{{criptoName}} - ${{this.pricePerUnity}}</h5>
                         </div>
                         <div class="card-body">
                             <div class="float-left pl-4">
                                 <div class="text-center">
-                                    <img [src]="this.iconUrl" width="152px">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input type="number" [(ngModel)]="quantity" (ngModelChange)="getPrice()" id="typeNumber" placeholder="Cantidad" class="form-control unityInput"/>
-                                </div>
-                                <div class="col-md-6 text-center" *ngIf=showPrice>
-                                    <h3>${{this.price}} </h3>
+                                    <img [src]="this.iconUrl" width="180px">
                                 </div>
                             </div>
                         </div>
@@ -26,15 +18,12 @@
                 </div>
                 <div class="col-md-8 mb-4">
                     <div class="card card-table">
-                        <div class="card-header">
-                            <h5 class="my-2">Simple Table</h5>
-                        </div>
                         <div class="card-body pt-1">
                             <div class="table-responsive">
-                                <table class="table  mb-0">
-                                    <thead class="">
+                                <table  class="table  mb-0">
+                                    <!--<thead class="">
                                         <tr>
-                                            <th>Exchange</th>
+                                            <th>Cripto</th>
                                             <th>Volumen Diario</th>
                                             <th>Website</th>
                                         </tr>
@@ -45,9 +34,57 @@
                                             <td>{{item.volume_1day_usd}}</td>
                                             <td>{{item.website}}</td>
                                         </tr>
+                                    </tbody>-->
+                                    <thead style="color: #c2185b">
+                                        <tr>
+                                            <th></th>
+                                            <th>Exchange</th>
+                                            <th>Comisión</th>
+                                            <th>Valor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="buyTable">
+                                        <tr>
+                                            <td>Elegí tu Exchange:</td>
+                                            <td>
+                                                <mat-select style="width: 120px;" class="form-select ng-pristine ng-valid ng-touched" [(ngModel)]="selectValue" (ngModelChange)="getTotalPrice(selectValue)">
+                                                    <mat-option *ngFor="let item of exchangeObjectList" [value]="item">
+                                                    {{item.exchange_id}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </td>
+                                            <td>{{this.exchange_selected.commission}}%</td>
+                                            <td>{{this.commissionValue}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <thead style="color: #c2185b">
+                                        <tr>
+                                            <th></th>
+                                            <th>Cantidad</th>
+                                            <th>Precio unitario</th>
+                                            <th>Valor</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="buyTable">
+                                        <tr>
+                                            <td>Ingrese la cantidad:</td>
+                                            <td>
+                                                <input type="number" [(ngModel)]="quantity" (ngModelChange)="getTotalPrice(selectValue)" id="typeNumber" placeholder="Cantidad" class="form-control unityInput"/>
+                                            </td>
+                                            <td>${{this.pricePerUnity}}</td>
+                                            <td><span *ngIf=showPrice>${{this.price}}</span></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div class="card-header bg-dark text-white">
+                            <tbody class="buyTable">
+                                <tr>
+                                    <td><button (click)='openDialog(0.25)' mat-raised-button [disabled]="!showTotalPrice" color="primary">Comprar</button></td>
+                                    <td class="text-end" *ngIf=showTotalPrice>Precio Total:	<strong style="color: #c2185b;">${{this.total}}</strong></td>
+                                </tr>
+                            </tbody>
                         </div>
                     </div>
                 </div>
@@ -60,7 +97,36 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6 mb-4">
+                <div class="col-md-8 mb-4">
+                    <div class="card">
+                        <div class="card card-table">
+                            <div class="card-header">
+                                <h5 class="my-2">Simple Table</h5>
+                            </div>
+                            <div class="card-body pt-1">
+                                <div class="table-responsive">
+                                    <table class="table  mb-0">
+                                        <thead class="">
+                                            <tr>
+                                                <th>Exchange</th>
+                                                <th>Volumen Diario</th>
+                                                <th>Website</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr *ngFor="let item of exchangeObjectList">
+                                                <td>{{item.exchange_id}}</td>
+                                                <td>{{item.volume_1day_usd}}</td>
+                                                <td>{{item.website}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
                     <div class="card">
                         <div class="card-header">
                             <h5 class="my-2">Simple Table</h5>
@@ -77,33 +143,6 @@
                                 </div>
                             </div>
                             <p class="description-chart mt-4 mb-0 text-center">(LOS NUMEROS ESTAN EXPRESADOS EN MILES DE MILLONES)</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                    <div class="card card-table">
-                        <div class="card-header">
-                            <h5 class="my-2">Simple Table</h5>
-                        </div>
-                        <div class="card-body pt-1">
-                            <div class="table-responsive">
-                                <table class="table  mb-0">
-                                    <thead class="">
-                                        <tr>
-                                            <th>Exchange</th>
-                                            <th>Volumen Diario</th>
-                                            <th>Website</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr *ngFor="let item of exchangeObjectList">
-                                            <td>{{item.exchange_id}}</td>
-                                            <td>{{item.volume_1day_usd}}</td>
-                                            <td>{{item.website}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
                         </div>
                     </div>
                 </div>
