@@ -1,3 +1,4 @@
+import { calcPossibleSecurityContexts } from '@angular/compiler/src/template_parser/binding_parser';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -40,7 +41,7 @@ export class CriptoDashboardComponent implements OnInit {
   quantity = 0;
   pricePerUnity: number;
   price: number;
-  selectValue = '';
+  selectValue= {};
   total: number;
   commissionValue: number;
   showTotalPrice = false;
@@ -127,6 +128,7 @@ export class CriptoDashboardComponent implements OnInit {
           } 
         } 
       }
+      this.exchangeNameList = this.exchangeObjectList.map(a => a.exchange_id);
       volumeList.splice(index,1);
     };
     return this.setCharts();
@@ -136,6 +138,7 @@ export class CriptoDashboardComponent implements OnInit {
     this.loading.stopSpiner();
     this.polarAreaChartType = 'pie';
     this.polarAreaChartLabels = this.exchangeNameList;
+    console.log(this.exchangeNameList);
     this.polarAreaChartData = this.maxVolumeExchangeList;
     this.showPolarChartVolume = true;           
   };
@@ -144,8 +147,8 @@ export class CriptoDashboardComponent implements OnInit {
     if (this.quantity == null) {
       this.quantity = 0;
     }
-    let res = this.quantity * this.pricePerUnity;
-    this.price = this.basicMaths.valueFormat(res,2);
+    let res = this.quantity * (this.pricePerUnity);
+    this.price = this.basicMaths.valueFormat(res,3);
     if (this.price > 0){
       this.showPrice = true;
     } else {
@@ -158,17 +161,23 @@ export class CriptoDashboardComponent implements OnInit {
     this.getPrice();
     if(exchange != '' ) {
       this.exchange_selected = exchange;
-      let res = this.price * this.exchange_selected.commission;
-      this.commissionValue = this.basicMaths.valueFormat(res/100,2);
-      this.total = this.commissionValue + this.price;
+      let res = (this.price * this.exchange_selected.commission);
+      this.commissionValue = this.basicMaths.valueFormat(Number(res)/100,2);
+      this.total = Number(this.commissionValue) + Number(this.price);
       this.showTotalPrice = true
     }
   }
 
-  openDialog(commissionPrice): void {
+  openDialog(): void {
     const dialogRef = this.dialog.open(BuyModalComponent, {
-      width: '250px',
-      data: {criptoName: this.criptoName, pricePerUnit: this.pricePerUnity, price: this.price, commission: commissionPrice }
+      width: '350px',
+      data: {criptoName: this.criptoName,
+      pricePerUnit: this.pricePerUnity,
+      price: this.price, 
+      commission: this.exchange_selected.commission,
+      total: this.total,
+      commissionValue: this.commissionValue,
+      quantity: this.quantity}
     });
 
     dialogRef.afterClosed().subscribe(result => {

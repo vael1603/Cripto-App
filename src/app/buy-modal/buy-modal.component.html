@@ -1,9 +1,30 @@
-<h1 mat-dialog-title>Comprar {{data.criptoName}}</h1>
-
-<p>precio: ${{data.price}}usd</p>
-
-<p>Comision: {{data.commission}}%</p>
-
-<p>Valor de commision: ${{this.commissionValue}}</p>
-
-<p>Total: {{this.total}}</p>
+<div class="p-3">
+    <h3 mat-dialog-title>Comprobante</h3>
+    <div class="row">
+        <div class="col-md-6">Usuario: </div>
+        <div class="col-md-6">{{this.name}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">Cripto: </div>
+        <div class="col-md-6">{{data.criptoName}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">Precio unitario: </div>
+        <div class="col-md-6">{{data.pricePerUnit}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">Comisión:</div>
+        <div class="col-md-6">{{data.commission}}%</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">Valor de Comisión</div>
+        <div class="col-md-6">${{data.commissionValue}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">Precio Total:</div>
+        <div class="col-md-6">{{data.total}}</div>
+    </div>
+    <div class="text-center">
+        <button (click)='saveOrder()' mat-raised-button color="primary">Confirmar Compra</button>
+    </div>
+</div>

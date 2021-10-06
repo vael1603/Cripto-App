@@ -19,5 +19,8 @@
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false
+  },
+  "paths": {
+    "tslib" : ["path/to/node_modules/tslib/tslib.d.ts"]
   }
 }

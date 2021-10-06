@@ -34,7 +34,7 @@ export class LoginService {
     .set('Access-Control-Allow-Origin', '*')
     .set('Content-Type', 'application/json')
     .set('Accept', '*/*')
-    .set('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+    .set('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
 
     return this.http.post<any>(`${this.path}/login`, body, {headers});
   }

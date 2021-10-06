@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
       this.refreshInfo(data)
       if (data.logged == true){
         sessionStorage.setItem('Logged', 'true');
+        sessionStorage.setItem('Name', data.lastName + ' ' + data.name);
         this.router.navigate(['/dashboard']);
       } else {
         if (data.foundUser == true) {

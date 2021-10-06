@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { BasicMaths } from './functions/BasicMaths';
 import { MatSelectModule } from '@angular/material/select';
 import { LoadingComponent } from './loading/loading/loading.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
@@ -49,7 +50,8 @@ const routes: Routes = [
     RouterModule,
     FormsModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule,
   ],
   exports: [RouterModule],
   providers: [DataWs, ChartConfig, BasicMaths, HeaderComponent, LoginComponent, LoadingComponent],
