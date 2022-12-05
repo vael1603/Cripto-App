@@ -33,7 +33,7 @@ jobs:
       - name: npm install and npm run build
         run: |
           npm i
-          npm run build:prod
+          npm run-script deploy
 
     # # Empujar los archivos de compilación a la sección de lanzamientos del repositorio
     # usando una acción Crear lanzamiento de GitHub . Aquí, especificamos la ruta donde
