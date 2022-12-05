@@ -23,28 +23,27 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // PRUEBAS SIN LOGIN
-    sessionStorage.setItem('Logged', 'true');
-        sessionStorage.setItem('Name', 'Valenzuela' + ' ' + 'Elias');
-        this.router.navigate(['/dashboard']);
   }
   
   public login() {
     this.resetErrors();
-    this.loginService.login(this.form).subscribe( data =>{
-      this.refreshInfo(data)
-      if (data.logged == true){
-        sessionStorage.setItem('Logged', 'true');
-        sessionStorage.setItem('Name', data.lastName + ' ' + data.name);
+    // this.loginService.login(this.form).subscribe( data =>{
+    //   this.refreshInfo(data)
+    //   if (data.logged == true){
+    //     sessionStorage.setItem('Logged', 'true');
+    //     sessionStorage.setItem('Name', data.lastName + ' ' + data.name);
+    //     this.router.navigate(['/dashboard']);
+    //   } else {
+    //     if (data.foundUser == true) {
+    //       this.incorrectPassword = true;
+    //     } else {
+    //       this.notFoundUser = true;
+    //     }
+    //   }
+    // });
+    sessionStorage.setItem('Logged', 'true');
+        sessionStorage.setItem('Name', 'Valenzuela' + ' ' + 'Elias');
         this.router.navigate(['/dashboard']);
-      } else {
-        if (data.foundUser == true) {
-          this.incorrectPassword = true;
-        } else {
-          this.notFoundUser = true;
-        }
-      }
-    });
   }
 
   refreshInfo(info: LoginResponse) {
