@@ -1,15 +1,20 @@
+# activa nuestro flujo de trabajo cuando alguien haga un push
 on: push
 name: Build Angular
+
+# Estamos definiendo un trabajo Build Angularque se ejecuta en ubuntu-latest. Cada trabajo se ejecuta en una nueva instancia de un entorno virtual. Un trabajo puede contener uno o más steps. También definimos la NodeJSversión que queremos ejecutar
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [16.x]
 
     steps:
+      # Este es el primer paso en nuestro flujo de trabajo. Extraeremos el código fuente de nuestro repositorio usando una acción de GitHub llamada checkout. Esta acción extrae su repositorio para $GITHUB_WORKSPACE que su flujo de trabajo pueda acceder al contenido de su repositorio.
       - uses: actions/checkout@v1
 
+      # Dado que necesitamos instalar los paquetes npm necesarios para el proyecto antes de compilar la aplicación, usamos una acción de GitHub llamada cachepara almacenar en caché los módulos del nodo. Configuramos este paso para realizar un seguimiento package-lock.jsonde cualquier cambio en los paquetes npm y, si no hay posibilidad, usamos los módulos del caché. Esto nos ayudará a acelerar el proceso de construcción.
       - name: Cache node modules
         uses: actions/cache@v1
         with:
@@ -17,16 +22,25 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+
+      # Aquí usamos el nodo de configuración de acción de GitHub que configura un entorno de nodo para usar en acciones
       - name: Node ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      
+      # En este paso, ejecutamos npm i para instalar los paquetes necesarios y luego ejecutamos el comando de compilación Angular para crear el paquete de compilación
       - name: npm install and npm run build
         run: |
           npm i
           npm run build:prod
+
+    # # Empujar los archivos de compilación a la sección de lanzamientos del repositorio
+    # usando una acción Crear lanzamiento de GitHub . Aquí, especificamos la ruta donde
+    # se almacenan los archivos de compilación después de compilarlos y especificarlos * para
+    # garantizar que todos los archivos de compilación se publiquen.
       - name: Push Build to Releases
         uses: ncipollo/release-action@v1
         with:
           artifacts: "dist/angular-githubaction/*"
-          token: ${{ secrets.TOKEN }}
+          token: ${{ secrets.TOKEN }} #El secrets.TOKEN es un token de API que otorga acceso al repositorio
