@@ -43,4 +43,5 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "dist/angular-githubaction/*"
-          token: ${{ secrets.TOKEN }} #El secrets.TOKEN es un token de API que otorga acceso al repositorio
+          #El secrets.TOKEN es un token de API que otorga acceso al repositorio
+          token: ${{ secrets.TOKEN }} 
