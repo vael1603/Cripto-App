@@ -34,14 +34,3 @@ jobs:
         run: |
           npm i
           npm run-script deploy
-
-    # # Empujar los archivos de compilación a la sección de lanzamientos del repositorio
-    # usando una acción Crear lanzamiento de GitHub . Aquí, especificamos la ruta donde
-    # se almacenan los archivos de compilación después de compilarlos y especificarlos * para
-    # garantizar que todos los archivos de compilación se publiquen.
-      - name: Push Build to Releases
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "dist/angular-githubaction/*"
-          #El secrets.TOKEN es un token de API que otorga acceso al repositorio
-          token: ${{ secrets.TOKEN }} 
