@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [10.x]
 
     steps:
       # Este es el primer paso en nuestro flujo de trabajo. Extraeremos el código fuente de nuestro repositorio usando una acción de GitHub llamada checkout. Esta acción extrae su repositorio para $GITHUB_WORKSPACE que su flujo de trabajo pueda acceder al contenido de su repositorio.
