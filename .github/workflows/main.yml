@@ -39,5 +39,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          #nombre de rama vacia en git sin nada
           BRANCH: gh-pages
-          FOLDER: dist/workshop
+          # ubicacion de compilado
+          FOLDER: dist/cripto-app
