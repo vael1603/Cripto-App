@@ -23,6 +23,10 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // PRUEBAS SIN LOGIN
+    sessionStorage.setItem('Logged', 'true');
+        sessionStorage.setItem('Name', 'Valenzuela' + ' ' + 'Elias');
+        this.router.navigate(['/dashboard']);
   }
   
   public login() {
